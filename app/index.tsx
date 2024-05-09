@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, FlatList, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  Linking,
+} from "react-native";
 import * as rssParser from "react-native-rss-parser";
 
 export default function Index() {
@@ -32,10 +39,15 @@ export default function Index() {
   }
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => alert(item.title)}>
+    <TouchableOpacity onPress={() => Linking.openURL(item.links[0].url)}>
       <View style={{ padding: 10 }}>
         <Text style={{ fontWeight: "bold" }}>{item.title}</Text>
-        <Text>{item.link}</Text>
+        {item.image && (
+          <Image
+            source={{ uri: item.image.url }}
+            style={{ width: 200, height: 100, marginTop: 5, marginBottom: 5 }}
+          />
+        )}
         <Text>{item.description}</Text>
       </View>
     </TouchableOpacity>
